@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>useState</title>
+    <script>
+      class React {
+        constructor() {
+          this.state = 0;
+          this.setState = (value) => {
+            this.state = value;
+            this.useState(value);
+            return this.state;
+          };
+        }
+
+        useState(value) {
+          this.state = value;
+          return [this.state, this.setState];
+        }
+      }
+
+      const react = new React();
+      const [count, setCount] = react.useState(1);
+
+      function upCount() {
+        setCount(count + 1);
+        document.getElementById("count").innerText = count;
+      }
+
+      function downCount() {
+        setCount(count - 1);
+        document.getElementById("count").innerText = count;
+      }
+    </script>
+  </head>
+  <body>
+    <div>count: <span id="count">0</span></div>
+    <button onclick="upCount()">up</button>
+    <button onclick="downCount()">down</button>
+  </body>
+</html>
