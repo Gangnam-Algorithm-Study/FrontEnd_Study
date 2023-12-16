@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>React Hooks with Vanilla JS</title>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script>
+            const root = document.getElementById("root");
+            let _state;
+            // (초기값, 컴포넌트, 타겟 element) 를 반드시 넘겨주도록 함.
+            const useState = (initState, component, $target) => {
+                const state = _state || initState; //_state가 falsy하다면 initState를 할당
+
+                const setState = (newState) => {
+                    _state = newState;
+                    component($target); //랜더 하도록 한다.
+                };
+
+                return [state, setState]; //상태, set함수를 함께 반환한다.
+            };
+
+            const Click = ($target) => {
+                // const [count, setCount] = useState(0);
+                const [count, setCount] = useState(0, Click, $target);
+
+                const render = () => {
+                    $target.innerHTML = /*html*/ `<div>
+                                <p>You clicked ${count} times</p>
+                                <button id="increase-button">
+                                    increase
+                                </button>
+                            </div>
+                        `;
+                    console.log("render");
+
+                    setEvent();
+                };
+
+                const increaseCount = () => {
+                    setCount(count + 1);
+                };
+
+                const setEvent = () => {
+                    const $increase = document.getElementById("increase-button");
+                    $increase.addEventListener("click", increaseCount);
+                };
+
+                render();
+            };
+
+            Click(root);
+        </script>
+    </body>
+</html>
