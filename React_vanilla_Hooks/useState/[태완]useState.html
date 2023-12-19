@@ -4,40 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>useState</title>
-    <script>
-      class React {
-        constructor() {
-          this.state = 0;
-          this.setState = (value) => {
-            this.state = value;
-            this.useState(value);
-            return this.state;
-          };
-        }
-
-        useState(value) {
-          this.state = value;
-          return [this.state, this.setState];
-        }
-      }
-
-      const react = new React();
-      const [count, setCount] = react.useState(1);
-
-      function upCount() {
-        setCount(count + 1);
-        document.getElementById("count").innerText = count;
-      }
-
-      function downCount() {
-        setCount(count - 1);
-        document.getElementById("count").innerText = count;
-      }
-    </script>
   </head>
   <body>
-    <div>count: <span id="count">0</span></div>
-    <button onclick="upCount()">up</button>
-    <button onclick="downCount()">down</button>
+    <div id="count"></div>
   </body>
+  <script>
+    const app = document.querySelector("#count");
+    class React {
+      constructor() {
+        this.state = 0;
+      }
+
+      useState(value) {
+        this.state = this.state ?? value;
+        this.setState = (value) => {
+          this.state = value;
+          this.render();
+        };
+        return [this.state, this.setState];
+      }
+
+      render() {
+        app.innerHTML = counter();
+      }
+    }
+
+    function counter() {
+      const [count, setCount] = react.useState(1);
+
+      window.upCount = () => setCount(count + 1);
+      window.downCount = () => {
+        if (count > 0) {
+          setCount(count - 1);
+        }
+      };
+
+      return `
+          <div>
+            <span>count: ${count} </span>
+            <button onclick="upCount()">+</button>
+            <button onclick="downCount()">-</button>
+          </div>
+        `;
+    }
+
+    const react = new React();
+    react.render();
+  </script>
 </html>
