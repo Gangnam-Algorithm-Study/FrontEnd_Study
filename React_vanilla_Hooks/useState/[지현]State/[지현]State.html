@@ -1,59 +1,63 @@
 <!-- 성공은 했으나 콘솔이 중복해서 찍히는 문제 발생  -->
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>React Hooks with Vanilla JS</title>
-    </head>
-    <body>
-        <div>
-            <h1>Vailla JS useState Counter</h1>
-            <H3 >count:<span id="counterState"></span><H3>
-            <button id="increase-button">+</button>
-        </div>
 
-        <script>
-            const stateId= document.getElementById('counterState')
-            let _state;
-            // (초기값, 상태컴포넌트, 타겟 element) 를 반드시 넘겨주도록 함.
-            const useState = (initState, stateComponent, $target) => {
-                const state = _state || initState; //_state가 falsy하다면 initState를 할당
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Hooks with Vanilla JS</title>
+</head>
 
-                const setState = (newState) => {
-                    _state = newState;  //상태 업데이트 후
-                    stateComponent($target); //랜더링 해야 하기에 컴포넌트 실행.
-                };
+<body>
+    <div>
+        <h1>Vailla JS useState Counter</h1>
+        <H3>count:<span id="counterState"></span>
+            <H3>
+                <button id="increase-button">+</button>
+    </div>
 
-                return [state, setState];//상태, set함수를 함께 반환한다.
+    <script>
+        const stateId = document.getElementById('counterState')
+        let _state;
+        // (초기값, 상태컴포넌트, 타겟 element) 를 반드시 넘겨주도록 함.
+        const useState = (initState, stateComponent, $target) => {
+            const state = _state || initState; //_state가 falsy하다면 initState를 할당
+
+            const setState = (newState) => {
+                _state = newState;  //상태 업데이트 후
+                stateComponent($target); //랜더링 해야 하기에 컴포넌트 실행.
             };
 
-            const stateRender = ($target) => {
-                const [count, setCount] = useState(0, stateRender, $target);
+            return [state, setState];//상태, set함수를 함께 반환한다.
+        };
 
-                const increaseCount = () => {
-                    setCount(count + 1);
-                };
+        const stateRender = ($target) => {
+            const [count, setCount] = useState(0, stateRender, $target);
 
-                const setIncrease = () => {
-                    const increase = document.getElementById("increase-button");
-                    increase.addEventListener("click", increaseCount);
-                };
+            const increaseCount = () => {
+                setCount(count + 1);
+            };
 
-                const render = () => {
-                    console.log('랜더링 시작')
-                    $target.innerHTML = /*html*/ `
+            const setIncrease = () => {
+                const increase = document.getElementById("increase-button");
+                increase.addEventListener("click", increaseCount);
+            };
+
+            const render = () => {
+                console.log('랜더링 시작')
+                $target.innerHTML = /*html*/ `
                         <span>${count}<span/>
                         `;
-                    console.log('랜더링완료')
-                };
-
-                render();
-                setIncrease();
+                console.log('랜더링완료')
             };
 
-            stateRender(stateId);
-        </script>
-    </body>
+            render();
+            setIncrease();
+        };
+
+        stateRender(stateId);
+    </script>
+</body>
+
 </html>
