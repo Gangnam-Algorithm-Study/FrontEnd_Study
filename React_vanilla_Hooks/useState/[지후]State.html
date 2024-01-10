@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanilla JavaScript Counter with State</title>
+</head>
+
+<body>
+
+    <h1 id="counter">카운터: 0</h1>
+    <button id="increaseBtn">증가</button>
+    <button id="decreaseBtn">감소</button>
+
+    <script>
+        function useState(initialValue) {
+            let state = initialValue;
+
+            const getState = () => state;
+
+            const setState = (newState) => {
+                state = newState;
+            };
+
+            return [getState, setState];
+        }
+
+        const initialCount = 0;
+
+        const [count, setCount] = useState(initialCount);
+
+        const counterElement = document.getElementById('counter');
+        const increaseBtn = document.getElementById('increaseBtn');
+        const decreaseBtn = document.getElementById('decreaseBtn');
+
+        const increaseCount = () => {
+            setCount(count() + 1);
+            updateCounter();
+        };
+
+        const decreaseCount = () => {
+            if (count() === 0) return;
+            setCount(count() - 1);
+            updateCounter();
+        };
+
+        const updateCounter = () => {
+            counterElement.innerHTML = `카운터: ${count()}`;
+        };
+
+        increaseBtn.addEventListener('click', increaseCount);
+
+        decreaseBtn.addEventListener('click', decreaseCount);
+
+        updateCounter();
+    </script>
+
+</body>
+
+</html>
