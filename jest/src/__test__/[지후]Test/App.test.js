@@ -9,7 +9,7 @@ describe('JSON placeholder', () => {
     const requestBody = {
         title: "안녕하세요",
         body: "저는 김지후 입니다.",
-        userId: 980829
+        userId: 980829 //
     }
 
     // test 와 it은 같은 기능이다 = test의 alias 가 it
