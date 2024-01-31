@@ -1,0 +1,16 @@
+{
+  "verbose": true,
+  "collectCoverage": true,
+  "testEnvironment": "jsdom",
+  "moduleNameMapper": {
+    "src/(.*)$": "<rootDir>/src/$1",
+    "mocks/(.*)$": "<rootDir>/src/mocks/$1",
+    "@mocks/(.*)$": "<rootDir>/src/mocks/$1",
+    "@root/(.*)$": "<rootDir>/../$1"
+  },
+  "setupFiles": ["<rootDir>/jest.polyfills.js"],
+  "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
+  "testEnvironmentOptions": {
+    "customExportConditions": [""]
+  }
+}

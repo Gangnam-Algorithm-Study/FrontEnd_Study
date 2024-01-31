@@ -1,31 +1,32 @@
-import { http } from "msw";
-const data = [];
-
-for (let i = 0; i < 100; i++) {
-  data.push({
-    title: "foo",
-    body: "bar",
-    userId: 1,
-  });
-}
+import { HttpResponse, http } from "msw";
 
 export const handlers = [
   // 포스트 목록
-  http.get("https://jsonplaceholder.typicode.com/posts", (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(data));
+  http.get("https://jsonplaceholder.typicode.com/posts", () => {
+    return new HttpResponse(null, {
+      status: 200,
+      statusText: "get",
+    });
   }),
   // 포스트 추가
-  http.post("https://jsonplaceholder.typicode.com/posts", (req, res, ctx) => {
-    data.push(req.body);
-    return res(ctx.status(201), ctx.json(data));
+  http.post("https://jsonplaceholder.typicode.com/posts", () => {
+    return new HttpResponse(null, {
+      status: 201,
+      statusText: "post",
+    });
   }),
   // 포스트 수정
-  http.put("https://jsonplaceholder.typicode.com/posts", (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(req.body));
+  http.put("https://jsonplaceholder.typicode.com/posts/1", () => {
+    return new HttpResponse(null, {
+      status: 200,
+      statusText: "put",
+    });
   }),
   // 포스트 삭제
-  http.delete("https://jsonplaceholder.typicode.com/posts", (req, res, ctx) => {
-    data.push(req.body);
-    return res(ctx.status(200), ctx.json({}));
+  http.delete("https://jsonplaceholder.typicode.com/posts/1", () => {
+    return new HttpResponse(null, {
+      status: 200,
+      statusText: "delete",
+    });
   }),
 ];

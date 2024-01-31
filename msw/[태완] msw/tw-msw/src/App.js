@@ -1,9 +1,12 @@
 import logo from "./logo.svg";
 import "./App.css";
-import worker from "./mocks/browser";
 
 console.log("?", process.env.NODE_ENV);
-if (process.env.NODE_ENV === "development") {
+if (typeof window === "undefined") {
+  const { server } = require("../mocks/server");
+  server.listen();
+} else {
+  const { worker } = require("../mocks/browser");
   worker.start();
 }
 

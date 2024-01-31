@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 const api = {
   get: async (url) => await fetch(url),
   post: async (url, data) =>
