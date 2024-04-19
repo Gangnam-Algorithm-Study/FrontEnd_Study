@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 앱이 렌더링될 div -->
+    <div id="app"></div>
+
+    <!--
+      useState 함수 동작 원리:
+      - 전역 변수 state는 초기에 정의되지 않은(undefined) 상태로 시작한다.
+      - useState 함수가 호출될 때, state가 undefined일 경우 초기 상태로 초기화한다.
+      - useState는 현재 상태와 상태를 업데이트할 수 있는 함수를 배열로 반환한다.
+      - 상태를 업데이트할 때마다 전역 변수 state를 갱신하고, render 함수를 호출하여 UI를 업데이트한다.
+    -->
+    <script>
+      // 전역 변수: 상태를 저장하는 변수
+      let state = undefined;
+
+      // React의 useState와 비슷한 역할을 하는 함수
+      function useState(initState) {
+        // 만약 상태가 정의되지 않았다면 초기 상태로 초기화
+        if (state === undefined) {
+          state = initState;
+        }
+
+        // 상태를 업데이트하고 다시 렌더링을 트리거하는 setState 함수
+        const setState = (newState) => {
+          state = newState;
+          render(); // UI 업데이트를 위해 render 함수 호출
+        };
+
+        // 현재 상태와 setState 함수를 배열로 반환
+        return [state, setState];
+      }
+
+      // Counter 컴포넌트
+      function Counter() {
+        // useState를 사용하여 상태(count)와 상태를 업데이트할 함수(setCount)를 선언
+        const [count, setCount] = useState(0);
+
+        // 전역 객체 window에 increment와 decrement 함수를 할당
+        window.increment = () => setCount(count + 1);
+        window.decrement = () => {
+          if (count > 0) {
+            setCount(count - 1);
+          }
+        };
+
+        // HTML 문자열로 렌더링된 컴포넌트 반환
+        return `
+          <div>
+            <strong>count: ${count} </strong>
+            <button onclick="increment()">증가</button>
+            <button onclick="decrement()">감소</button>
+          </div>
+        `;
+      }
+
+      // UI를 렌더링하는 함수
+      function render() {
+        const $app = document.querySelector("#app");
+        $app.innerHTML = Counter();
+      }
+
+      // 초기 렌더링 수행
+      render();
+    </script>
+  </body>
+</html>
